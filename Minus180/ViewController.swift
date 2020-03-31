@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     
     var singleDartPossibleValues = [Int]()
     // var lastIteratedItem = Int()
+    var singleBullInserted = false;
+    var bullsEyeInserted = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +31,7 @@ class ViewController: UIViewController {
     
     func getInitialValues() {
         //MARK: store all values possible with only one dart thrown at the baord
-        //Single Sectors
+        //Sectors
         for i in 0..<21 {
             
             singleDartPossibleValues.append(i)
@@ -40,8 +42,23 @@ class ViewController: UIViewController {
             //singleDartPossibleValues.insert(50, at: i-1) // an i-1 einfügen, wenn i größer gleich 50
         }
         
+        //Bull
+        for i in singleDartPossibleValues {
+            if i >= 25 && !singleBullInserted {
+                singleDartPossibleValues.insert(25, at: i-1)
+                singleBullInserted = true
+            } else if i >= 50  && !bullsEyeInserted {
+                singleDartPossibleValues.insert(50, at: i-1)
+                bullsEyeInserted = true
+            }
+        }
+
+        
         singleDartPossibleValues = singleDartPossibleValues.removeDuplicatesFromArray()
         singleDartPossibleValues.sort()
+        
+        
+        
         print(singleDartPossibleValues)
     }
     
