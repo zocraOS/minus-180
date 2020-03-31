@@ -13,36 +13,45 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var allPossibleNumbers = [Int]()
-    let allPossibleCheckouts = [Int]()
+    var singleDartPossibleValues = [Int]()
+    // var lastIteratedItem = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        calculateAllPossibleNumbers()
+        getInitialValues()
+        
     }
     
-    func calculateAllPossibleNumbers() {
-        //MARK: Calculate all possible numbers a player can throw in a regular match of darts at the beginning of the match, depending on the player-chosen matchmode
+    func getThrowValue() {
         
-        //alle zahlen von 0 bis 20 einfügen
+    }
+    
+    func getInitialValues() {
+        //MARK: store all values possible with only one dart thrown at the baord
+        //Single Sectors
         for i in 0..<21 {
-            print(i)
-            allPossibleNumbers.append(i)
+            
+            singleDartPossibleValues.append(i)
+            singleDartPossibleValues.append(i*2)
+            singleDartPossibleValues.append(i*3)
+            //MARK: Bull nicht vergessen!! Erst nach entfernen aller doppelten einfügen!
+            // singleDartPossibleValues.insert(25, at: i-1) // an i-1 einfügen, wenn i größer gleich 25
+            //singleDartPossibleValues.insert(50, at: i-1) // an i-1 einfügen, wenn i größer gleich 50
         }
-
         
-     /*   for score in 1...180 {
-            if score >= 161 {
-                if score % 3 == 0 {
-                    allPossibleNumbers.append(score)
-                }
-            } else if score % 3 == 0 && score-50 <= 120 {
-                allPossibleNumbers.append(score)
-        }
-    }*/
-        print("Array: \(allPossibleNumbers)")
-
-}
+        singleDartPossibleValues = singleDartPossibleValues.removeDuplicatesFromArray()
+        singleDartPossibleValues.sort()
+        print(singleDartPossibleValues)
+    }
+    
+   
 }
 
+//MARK: Extension to get all unique Values in an array
+extension Sequence where Iterator.Element: Hashable {
+    func removeDuplicatesFromArray() -> [Iterator.Element] {
+        var seen: Set<Iterator.Element> = []
+        return filter { seen.insert($0).inserted }
+    }
+}
